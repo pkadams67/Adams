@@ -1,2 +1,1 @@
-# adams
- Paul Adams |  Developer
+# Paul Adams |  Developer
