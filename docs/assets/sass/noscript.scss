@@ -7,23 +7,24 @@
 
 /* Banner */
 
-	#banner {
-		body.is-preload & {
-			.logo {
-				@include vendor('transform', 'none');
-				opacity: 1;
-			}
-
+	body.is-preload {
+		#banner {
 			h2 {
-				opacity: 1;
 				@include vendor('transform', 'none');
-				@include vendor('filter', 'none');
+				opacity: 1;
+
+				&:before, &:after {
+					width: 100%;
+				}
 			}
 
-			p {
-				opacity: 01;
+			.more {
 				@include vendor('transform', 'none');
-				@include vendor('filter', 'none');
+				opacity: 1;
+			}
+
+			&:after {
+				opacity: 0;
 			}
 		}
 	}
