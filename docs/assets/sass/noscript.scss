@@ -5,26 +5,23 @@
 @import 'libs/breakpoints';
 @import 'libs/html-grid';
 
-/* Banner */
+/* Loader */
 
-	body.is-preload {
-		#banner {
-			h2 {
-				@include vendor('transform', 'none');
-				opacity: 1;
+	body.landing {
 
-				&:before, &:after {
-					width: 100%;
+		&.is-preload {
+
+			// Spinner (active)
+
+				&:before {
+					display: none;
 				}
-			}
 
-			.more {
-				@include vendor('transform', 'none');
-				opacity: 1;
-			}
+			// Overlay (active)
 
-			&:after {
-				opacity: 0;
-			}
+				&:after {
+					display: none;
+				}
+
 		}
 	}
