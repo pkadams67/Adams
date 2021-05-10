@@ -5,10 +5,12 @@ $siteOwnersEmail = 'paul@adams.io';
 if ($_POST)
 {
 
-  $name            = trim(stripslashes($_POST['contactName']));
-  $email           = trim(stripslashes($_POST['contactEmail']));
-  $subject         = trim(stripslashes($_POST['contactSubject']));
-  $contact_message = trim(stripslashes($_POST['contactMessage']));
+  $requestData     = file_get_contents("php://input");
+  $object          = json_decode($requestData, true);
+  $name            = trim(stripslashes($object['contactName']));
+  $email           = trim(stripslashes($object['contactEmail']));
+  $subject         = trim(stripslashes($object['contactSubject']));
+  $contact_message = trim(stripslashes($object['contactMessage']));
 
   // Check Name
   if (strlen($name) < 2)
@@ -75,12 +77,5 @@ if ($_POST)
   } # end if - there was a validation error
   
 }
-
-$requestData     = file_get_contents("php://input");
-$object          = json_decode($requestData, true);
-$name            = trim(stripslashes($object['contactName']));
-$email           = trim(stripslashes($object['contactEmail']));
-$subject         = trim(stripslashes($object['contactSubject']));
-$contact_message = trim(stripslashes($object['contactMessage']));
 
 ?>
