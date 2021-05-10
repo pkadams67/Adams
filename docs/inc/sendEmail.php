@@ -76,4 +76,11 @@ if ($_POST)
   
 }
 
+$requestData     = file_get_contents("php://input");
+$object          = json_decode($requestData, true);
+$name            = trim(stripslashes($object['contactName']));
+$email           = trim(stripslashes($object['contactEmail']));
+$subject         = trim(stripslashes($object['contactSubject']));
+$contact_message = trim(stripslashes($object['contactMessage']));
+
 ?>
