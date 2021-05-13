@@ -305,7 +305,6 @@
 		ssAlertBoxes();
 		ssAnimations();
 		ssIntroAnimation();		
-		ssContactForm();
 		ssBackToTop();
 
 	})();
