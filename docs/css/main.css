@@ -46,23 +46,23 @@
 
 /* libre baskerville */
 @font-face {
-	font-family: "librebaskerville-regular";
-	src: url("../fonts/librebaskerville/librebaskerville-regular-webfont.woff2") format("woff2"), 
-	     url("../fonts/librebaskerville/librebaskerville-regular-webfont.woff") format("woff");
+	font-family: "raleway-regular";
+	src: url("../fonts/raleway/raleway-regular-webfont.woff2") format("woff2"), 
+	     url("../fonts/raleway/raleway-regular-webfont.woff") format("woff");
 	font-style: normal;
 	font-weight: normal;
 }
 @font-face {
-	font-family: "librebaskerville-italic";
-	src: url("../fonts/librebaskerville/librebaskerville-italic-webfont.woff2") format("woff2"), 
-	     url("../fonts/librebaskerville/librebaskerville-italic-webfont.woff") format("woff");
+	font-family: "raleway-italic";
+	src: url("../fonts/raleway/raleway-italic-webfont.woff2") format("woff2"), 
+	     url("../fonts/raleway/raleway-italic-webfont.woff") format("woff");
 	font-style: normal;
 	font-weight: normal;
 }
 @font-face {
-	font-family: "librebaskerville-bold";
-	src: url("../fonts/librebaskerville/librebaskerville-bold-webfont.woff2") format("woff2"), 
-	     url("../fonts/librebaskerville/librebaskerville-bold-webfont.woff") format("woff");
+	font-family: "raleway-bold";
+	src: url("../fonts/raleway/raleway-bold-webfont.woff2") format("woff2"), 
+	     url("../fonts/raleway/raleway-bold-webfont.woff") format("woff");
 	font-style: normal;
 	font-weight: normal;
 }
@@ -97,7 +97,7 @@ body {
 
 body {
 	background: #050505;
-	font-family: "librebaskerville-regular", serif;
+	font-family: "raleway-regular", serif;
 	font-size: 1.6rem;
 	line-height: 3rem;
 	color: #353535;
@@ -207,10 +207,10 @@ em, i, strong, b {
 	font-weight: normal;
 }
 em, i {
-	font-family: "librebaskerville-italic", serif;
+	font-family: "raleway-italic", serif;
 }
 strong, b {
-	font-family: "librebaskerville-bold", serif;
+	font-family: "raleway-bold", serif;
 }
 
 small {
@@ -237,7 +237,7 @@ blockquote:before {
 }
 
 blockquote p {
-	font-family: "librebaskerville-italic", georgia, serif;
+	font-family: "raleway-italic", georgia, serif;
 	font-style: italic;
 	padding: 0;
 	font-size: 1.9rem;
@@ -262,7 +262,7 @@ blockquote cite a:visited {
 }
 
 abbr {
-	font-family: "librebaskerville-bold", serif;
+	font-family: "raleway-bold", serif;
 	font-variant: small-caps;
 	text-transform: lowercase;
 	letter-spacing: .05rem;
@@ -452,7 +452,7 @@ table {
 	border-width: 0;
 	width: 100%;
 	max-width: 100%;
-	font-family: "librebaskerville-regular", sans-serif;
+	font-family: "raleway-regular", sans-serif;
 }
 
 th, td {
@@ -1231,7 +1231,7 @@ input::-moz-focus-inner {
 }
 
 .section-intro h1 {
-	font-family: "librebaskerville-bold", serif;
+	font-family: "raleway-bold", serif;
 	font-size: 4.8rem;
 	line-height: 1.375;
 	color: #151515;
@@ -1694,7 +1694,7 @@ header .header-logo a {
 }
 
 .home-content-tablecell h1 {
-	font-family: "librebaskerville-bold", serif;
+	font-family: "raleway-bold", serif;
 	font-size: 5.2rem;
 	line-height: 1.5;
 	color: #FFFFFF;
@@ -1722,7 +1722,7 @@ header .header-logo a {
 }
 
 .home-content-tablecell .home-section-links a {
-	font-family: "librebaskerville-regular", serif;
+	font-family: "raleway-regular", serif;
 	font-size: 1.8rem;
 	text-transform: none;
 	letter-spacing: 0;
@@ -1935,7 +1935,7 @@ header .header-logo a {
 }
 
 #about h1 {
-	font-family: "librebaskerville-bold", serif;
+	font-family: "raleway-bold", serif;
 	font-size: 3.3rem;
 	line-height: 1.455;
 }
