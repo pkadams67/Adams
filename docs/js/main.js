@@ -1,313 +1,238 @@
-/* ===================================================================
- * Main JS
+/** 
+ * ===================================================================
+ * main js
  *
- * ------------------------------------------------------------------- */ 
+ * ------------------------------------------------------------------- 
+ */ 
 
 (function($) {
 
 	"use strict";
 
-	var cfg = {		
-		defAnimation   : "fadeInUp",    // default css animation		
-		scrollDuration : 800,           // smoothscroll duration
-		statsDuration  : 4000           // stats animation duration
-	},	
-	$WIN = $(window);
+	/*---------------------------------------------------- */
+	/* Preloader
+	------------------------------------------------------ */ 
+   $(window).load(function() {
 
-	
-	/* Preloader 
-	 * -------------------------------------------------- */
-	var ssPreloader = function() {
+      // will first fade out the loading animation 
+    	$("#loader").fadeOut("slow", function(){
 
-		$WIN.on('load', function() {	
+        // will fade out the whole DIV that covers the website.
+        $("#preloader").delay(300).fadeOut("slow");
 
-			// force page scroll position to top at page refresh
-			$('html, body').animate({ scrollTop: 0 }, 'normal');
+      });       
 
-	      // will first fade out the loading animation 
-	    	$("#loader").fadeOut("slow", function(){
-
-	        // will fade out the whole DIV that covers the website.
-	        $("#preloader").delay(300).fadeOut("slow");
-
-	      }); 
-	  	});
-	}; 
+  	})
 
 
+  	/*---------------------------------------------------- */
+  	/* FitText Settings
+  	------------------------------------------------------ */
+  	setTimeout(function() {
+
+   	$('#intro h1').fitText(1, { minFontSize: '42px', maxFontSize: '84px' });
+
+  	}, 100);
+
+
+	/*---------------------------------------------------- */
 	/* FitVids
 	------------------------------------------------------ */ 
-	var ssFitVids = function() {
-		$(".fluid-video-wrapper").fitVids();
-	};  		
+  	$(".fluid-video-wrapper").fitVids();
 
-   
+
+	/*---------------------------------------------------- */
+	/* Owl Carousel
+	------------------------------------------------------ */ 
+	$("#owl-slider").owlCarousel({
+        navigation: false,
+        pagination: true,
+        itemsCustom : [
+	        [0, 1],
+	        [700, 2],
+	        [960, 3]
+	     ],
+        navigationText: false
+    });
+
+
+	/*----------------------------------------------------- */
+	/* Alert Boxes
+  	------------------------------------------------------- */
+	$('.alert-box').on('click', '.close', function() {
+	  $(this).parent().fadeOut(500);
+	});	
+
+
+	/*----------------------------------------------------- */
+	/* Stat Counter
+  	------------------------------------------------------- */
+   var statSection = $("#stats"),
+       stats = $(".stat-count");
+
+   statSection.waypoint({
+
+   	handler: function(direction) {
+
+      	if (direction === "down") {       		
+
+			   stats.each(function () {
+				   var $this = $(this);
+
+				   $({ Counter: 0 }).animate({ Counter: $this.text() }, {
+				   	duration: 4000,
+				   	easing: 'swing',
+				   	step: function (curValue) {
+				      	$this.text(Math.ceil(curValue));
+				    	}
+				  	});
+				});
+
+       	} 
+
+       	// trigger once only
+       	this.destroy();      	
+
+		},
+			
+		offset: "90%"
+	
+	});	
+
+
+	/*---------------------------------------------------- */
 	/*	Masonry
 	------------------------------------------------------ */
-	var ssMasonryFolio = function() {
+	var containerProjects = $('#folio-wrapper');
 
-		var containerBricks = $('.bricks-wrapper');
+	containerProjects.imagesLoaded( function() {
 
-		containerBricks.imagesLoaded( function() {
-			containerBricks.masonry( {	
-			  	itemSelector: '.brick',
-			  	resize: true
-			});
+		containerProjects.masonry( {		  
+		  	itemSelector: '.folio-item',
+		  	resize: true 
 		});
-	};
+
+	});
 
 
-	/*	Light Gallery
-	------------------------------------------------------- */
-	var ssLightGallery = function() {
+	/*----------------------------------------------------*/
+	/*	Modal Popup
+	------------------------------------------------------*/
+   $('.item-wrap a').magnificPopup({
 
-		$('#folio-wrap').lightGallery({  
-			showThumbByDefault: false,
-			hash: false,
-			selector: ".item-wrap"		
-		});
-	};
+      type:'inline',
+      fixedContentPos: false,
+      removalDelay: 300,
+      showCloseBtn: false,
+      mainClass: 'mfp-fade'
 
+   });
 
-  	/* Menu on Scrolldown
-	 * ------------------------------------------------------ */
-	var ssMenuOnScrolldown = function() {
-
-		var menuTrigger = $('#header-menu-trigger');
-
-		$WIN.on('scroll', function() {
-
-			if ($WIN.scrollTop() > 150) {				
-				menuTrigger.addClass('opaque');
-			}
-			else {				
-				menuTrigger.removeClass('opaque');
-			}
-
-		}); 
-	};
+   $(document).on('click', '.popup-modal-dismiss', function (e) {
+   	e.preventDefault();
+   	$.magnificPopup.close();
+   });
 
 	
-  	/* OffCanvas Menu
-	 * ------------------------------------------------------ */
-   var ssOffCanvas = function() {
+	/*-----------------------------------------------------*/
+  	/* Navigation Menu
+   ------------------------------------------------------ */  
+   var toggleButton = $('.menu-toggle'),
+       nav = $('.main-navigation');
 
-	       var menuTrigger = $('#header-menu-trigger'),
-	       nav             = $('#menu-nav-wrap'),
-	       closeButton     = nav.find('.close-button'),
-	       siteBody        = $('body'),
-	       mainContents    = $('section, footer');
+   // toggle button
+   toggleButton.on('click', function(e) {
 
-		// open-close menu by clicking on the menu icon
-		menuTrigger.on('click', function(e){
-			e.preventDefault();
-			menuTrigger.toggleClass('is-clicked');
-			siteBody.toggleClass('menu-is-open');
-		});
+		e.preventDefault();
+		toggleButton.toggleClass('is-clicked');
+		nav.slideToggle();
 
-		// close menu by clicking the close button
-		closeButton.on('click', function(e){
-			e.preventDefault();
-			menuTrigger.trigger('click');	
-		});
+	});
 
-		// close menu clicking outside the menu itself
-		siteBody.on('click', function(e){		
-			if( !$(e.target).is('#menu-nav-wrap, #header-menu-trigger, #header-menu-trigger span') ) {
-				menuTrigger.removeClass('is-clicked');
-				siteBody.removeClass('menu-is-open');
-			}
-		});
+   // nav items
+  	nav.find('li a').on("click", function() {   
 
-   };
+   	// update the toggle button 		
+   	toggleButton.toggleClass('is-clicked'); 
+   	// fadeout the navigation panel
+   	nav.fadeOut();   		
+   	     
+  	});
 
 
-  /* Smooth Scrolling
-	* ------------------------------------------------------ */
-	var ssSmoothScroll = function() {
+   /*---------------------------------------------------- */
+  	/* Highlight the current section in the navigation bar
+  	------------------------------------------------------ */
+	var sections = $("section"),
+	navigation_links = $("#main-nav-wrap li a");	
 
-		$('.smoothscroll').on('click', function (e) {
-			var target = this.hash,
-			$target    = $(target);
+	sections.waypoint( {
+
+       handler: function(direction) {
+
+		   var active_section;
+
+			active_section = $('section#' + this.element.id);
+
+			if (direction === "up") active_section = active_section.prev();
+
+			var active_link = $('#main-nav-wrap a[href="#' + active_section.attr("id") + '"]');			
+
+         navigation_links.parent().removeClass("current");
+			active_link.parent().addClass("current");
+
+		}, 
+
+		offset: '25%'
+	});
+
+
+	/*---------------------------------------------------- */
+  	/* Smooth Scrolling
+  	------------------------------------------------------ */
+  	$('.smoothscroll').on('click', function (e) {
 	 	
-		 	e.preventDefault();
-		 	e.stopPropagation();	   	
+	 	e.preventDefault();
 
-	    	$('html, body').stop().animate({
-	       	'scrollTop': $target.offset().top
-	      }, cfg.scrollDuration, 'swing').promise().done(function () {
+   	var target = this.hash,
+    	$target = $(target);
 
-	      	// check if menu is open
-	      	if ($('body').hasClass('menu-is-open')) {
-					$('#header-menu-trigger').trigger('click');
-				}
+    	$('html, body').stop().animate({
+       	'scrollTop': $target.offset().top
+      }, 800, 'swing', function () {
+      	window.location.hash = target;
+      });
 
-	      	window.location.hash = target;
-	      });
-	  	});
+  	});  
+  
 
-	};
-
-
-  /* Placeholder Plugin Settings
-	* ------------------------------------------------------ */
-	var ssPlaceholder = function() {
-		$('input, textarea, select').placeholder();  
-	};
+   /*---------------------------------------------------- */
+	/*  Placeholder Plugin Settings
+	------------------------------------------------------ */ 
+	$('input, textarea, select').placeholder()  
 
 
-  /* Stat Counter
-  	*------------------------------------------------------- */
-  	var ssStatCounter = function() {
+ 	/*----------------------------------------------------- */
+  	/* Back to top
+   ------------------------------------------------------- */ 
+	var pxShow = 300; // height on which the button will show
+	var fadeInTime = 400; // how slow/fast you want the button to show
+	var fadeOutTime = 400; // how slow/fast you want the button to hide
+	var scrollSpeed = 300; // how slow/fast you want the button to scroll to top. can be a value, 'slow', 'normal' or 'fast'
 
-	   var statSection = $("#stats"),
-	   stats           = $(".stat-count");
+   // Show or hide the sticky footer button
+	jQuery(window).scroll(function() {
 
-	   statSection.waypoint({
-	   	handler: function(direction) {
+		if (!( $("#header-search").hasClass('is-visible'))) {
 
-	      	if (direction === "down") { 
-				   stats.each(function () {
-					   var $this = $(this);
-
-					   $({ Counter: 0 }).animate({ Counter: $this.text() }, {
-					   	duration: cfg.statsDuration,
-					   	easing: 'swing',
-					   	step: function (curValue) {
-					      	$this.text(Math.ceil(curValue));
-					    	}
-					  	});
-					});
-	       	} 
-
-	       	// trigger once only
-	       	this.destroy(); 
-			},	
-			offset: "90%"	
-		});
-
-  	};
-
-
-  	/* Alert Boxes
-  	------------------------------------------------------- */
-  	var ssAlertBoxes = function() {
-
-  		$('.alert-box').on('click', '.close', function() {
-		  $(this).parent().fadeOut(500);
-		}); 
-
-  	};	  	
-	
-
-  /* Animations
-	* ------------------------------------------------------- */
-	var ssAnimations = function() {
-
-		if (!$("html").hasClass('no-cssanimations')) {
-			$('.animate-this').waypoint({
-				handler: function(direction) {
-
-					var defAnimationEfx = cfg.defAnimation;
-
-					if ( direction === 'down' && !$(this.element).hasClass('animated')) {
-						$(this.element).addClass('item-animate');
-
-						setTimeout(function() {
-							$('body .animate-this.item-animate').each(function(ctr) {
-								var el       = $(this),
-								animationEfx = el.data('animate') || null;	
-
-	                  	if (!animationEfx) {
-			                 	animationEfx = defAnimationEfx;	                 	
-			               }
-
-			              	setTimeout( function () {
-									el.addClass(animationEfx + ' animated');
-									el.removeClass('item-animate');
-								}, ctr * 50);
-
-							});								
-						}, 100);
-					}
-
-					// trigger once only
-	       		this.destroy(); 
-				}, 
-				offset: '95%'
-			}); 
-		}
-
-	};
-	
-
-  /* Intro Animation
-	* ------------------------------------------------------- */
-	var ssIntroAnimation = function() {
-
-		$WIN.on('load', function() {
-		
-	     	if (!$("html").hasClass('no-cssanimations')) {
-	     		setTimeout(function(){
-	    			$('.animate-intro').each(function(ctr) {
-						var el = $(this),
-	                   animationEfx = el.data('animate') || null;		                                      
-
-	               if (!animationEfx) {
-	                 	animationEfx = cfg.defAnimation;	                 	
-	               }
-
-	              	setTimeout( function () {
-							el.addClass(animationEfx + ' animated');
-						}, ctr * 300);
-					});						
-				}, 100);
-	     	} 
-		}); 
-
-	};
- 
-  /* Back to Top
-	* ------------------------------------------------------ */
-	var ssBackToTop = function() {
-
-		var pxShow  = 500,         // height on which the button will show
-		fadeInTime  = 400,         // how slow/fast you want the button to show
-		fadeOutTime = 400,         // how slow/fast you want the button to hide
-		scrollSpeed = 300,         // how slow/fast you want the button to scroll to top. can be a value, 'slow', 'normal' or 'fast'
-		goTopButton = $("#go-top")
-
-		// Show or hide the sticky footer button
-		$(window).on('scroll', function() {
-			if ($(window).scrollTop() >= pxShow) {
-				goTopButton.fadeIn(fadeInTime);
+			if (jQuery(window).scrollTop() >= pxShow) {
+				jQuery("#go-top").fadeIn(fadeInTime);
 			} else {
-				goTopButton.fadeOut(fadeOutTime);
+				jQuery("#go-top").fadeOut(fadeOutTime);
 			}
-		});
-	};	
 
+		}		
 
-
-  /* Initialize
-	* ------------------------------------------------------ */
-	(function ssInit() {
-
-		ssPreloader();
-		ssFitVids();
-		ssMasonryFolio();
-		ssLightGallery();
-		ssMenuOnScrolldown();
-		ssOffCanvas();
-		ssSmoothScroll();
-		ssPlaceholder();
-		ssStatCounter();
-		ssAlertBoxes();
-		ssAnimations();
-		ssIntroAnimation();		
-		ssBackToTop();
-
-	})();
- 
+	});		
 
 })(jQuery);
