@@ -1,238 +1,176 @@
-/** 
- * ===================================================================
- * main js
- *
- * ------------------------------------------------------------------- 
- */ 
+/* Table of Contents
+==================================================
+# Navigation Height
+# Counter
+# Progress Bar
+# EasyPieChart
+# MagnificPopup
+# onePageNav
+# Sticky Nav
+# Mobile Toggle Control
 
-(function($) {
+==================================================
+*/
 
-	"use strict";
+// -------------------------------------------------------------
+//  Navigation Height 
+// -------------------------------------------------------------
 
-	/*---------------------------------------------------- */
-	/* Preloader
-	------------------------------------------------------ */ 
-   $(window).load(function() {
+(function() {
 
-      // will first fade out the loading animation 
-    	$("#loader").fadeOut("slow", function(){
+    var height = $(window).height();
+     $(".menu-one .navbar-nav").innerHeight(height);
+    
+}());    
+           
+// -------------------------------------------------------------
+//Mobile Toggle Control
+// -------------------------------------------------------------
 
-        // will fade out the whole DIV that covers the website.
-        $("#preloader").delay(300).fadeOut("slow");
+menuHide();
+function menuHide(){
+    var windowWidth = $(window).width();
+        if(windowWidth < 991 ){
+            $('.navbar-nav a').click(function (e) {
+            $('.navbar-collapse').collapse('toggle');
+        });
+    }  
+}    
+          
+// -------------------------------------------------------------
+// Counter
+// -------------------------------------------------------------
 
-      });       
+(function () {
 
-  	})
-
-
-  	/*---------------------------------------------------- */
-  	/* FitText Settings
-  	------------------------------------------------------ */
-  	setTimeout(function() {
-
-   	$('#intro h1').fitText(1, { minFontSize: '42px', maxFontSize: '84px' });
-
-  	}, 100);
-
-
-	/*---------------------------------------------------- */
-	/* FitVids
-	------------------------------------------------------ */ 
-  	$(".fluid-video-wrapper").fitVids();
-
-
-	/*---------------------------------------------------- */
-	/* Owl Carousel
-	------------------------------------------------------ */ 
-	$("#owl-slider").owlCarousel({
-        navigation: false,
-        pagination: true,
-        itemsCustom : [
-	        [0, 1],
-	        [700, 2],
-	        [960, 3]
-	     ],
-        navigationText: false
+    $('.counter').counterUp({
+        delay: 10,
+        time: 1000
+    
     });
 
+}());
 
-	/*----------------------------------------------------- */
-	/* Alert Boxes
-  	------------------------------------------------------- */
-	$('.alert-box').on('click', '.close', function() {
-	  $(this).parent().fadeOut(500);
-	});	
+// -------------------------------------------------------------
+// Progress Bar
+// -------------------------------------------------------------
 
+(function () {
 
-	/*----------------------------------------------------- */
-	/* Stat Counter
-  	------------------------------------------------------- */
-   var statSection = $("#stats"),
-       stats = $(".stat-count");
+    $('.progress-content').bind('inview', function(event, visible, visiblePartX, visiblePartY) {
+        if (visible) {
+            $.each($('div.progress-bar'),function(){
+                $(this).css('width', $(this).attr('aria-valuenow')+'%');
+            });
+            $(this).unbind('inview');
+        }
+    });
+    $('.rating-bar').bind('inview', function(event, visible, visiblePartX, visiblePartY) {
+        if (visible) {
+            $.each($('div.progress-bar'),function(){
+                $(this).css('width', $(this).attr('aria-valuenow')+'%');
+            });
+            $(this).unbind('inview');
+        }
+    });
 
-   statSection.waypoint({
-
-   	handler: function(direction) {
-
-      	if (direction === "down") {       		
-
-			   stats.each(function () {
-				   var $this = $(this);
-
-				   $({ Counter: 0 }).animate({ Counter: $this.text() }, {
-				   	duration: 4000,
-				   	easing: 'swing',
-				   	step: function (curValue) {
-				      	$this.text(Math.ceil(curValue));
-				    	}
-				  	});
-				});
-
-       	} 
-
-       	// trigger once only
-       	this.destroy();      	
-
-		},
-			
-		offset: "90%"
-	
-	});	
+}());
 
 
-	/*---------------------------------------------------- */
-	/*	Masonry
-	------------------------------------------------------ */
-	var containerProjects = $('#folio-wrapper');
+// -------------------------------------------------------------
+// EasyPieChart
+// -------------------------------------------------------------
 
-	containerProjects.imagesLoaded( function() {
+(function () {
 
-		containerProjects.masonry( {		  
-		  	itemSelector: '.folio-item',
-		  	resize: true 
-		});
+    $('.language-skill').bind('inview', function(event, visible, visiblePartX, visiblePartY) {
+        if (visible) {
+            $('.chart').easyPieChart({
+                //your configuration goes here
+                easing: 'easeOut',
+                delay: 3000,
+                scaleColor: false,
+                animate: 2000,
+                onStep: function(from, to, percent) {
+                    this.el.children[0].innerHTML = Math.round(percent);
+                }
 
-	});
-
-
-	/*----------------------------------------------------*/
-	/*	Modal Popup
-	------------------------------------------------------*/
-   $('.item-wrap a').magnificPopup({
-
-      type:'inline',
-      fixedContentPos: false,
-      removalDelay: 300,
-      showCloseBtn: false,
-      mainClass: 'mfp-fade'
-
-   });
-
-   $(document).on('click', '.popup-modal-dismiss', function (e) {
-   	e.preventDefault();
-   	$.magnificPopup.close();
-   });
-
-	
-	/*-----------------------------------------------------*/
-  	/* Navigation Menu
-   ------------------------------------------------------ */  
-   var toggleButton = $('.menu-toggle'),
-       nav = $('.main-navigation');
-
-   // toggle button
-   toggleButton.on('click', function(e) {
-
-		e.preventDefault();
-		toggleButton.toggleClass('is-clicked');
-		nav.slideToggle();
-
-	});
-
-   // nav items
-  	nav.find('li a').on("click", function() {   
-
-   	// update the toggle button 		
-   	toggleButton.toggleClass('is-clicked'); 
-   	// fadeout the navigation panel
-   	nav.fadeOut();   		
-   	     
-  	});
+            });
+        }
+    }); 
+}());
 
 
-   /*---------------------------------------------------- */
-  	/* Highlight the current section in the navigation bar
-  	------------------------------------------------------ */
-	var sections = $("section"),
-	navigation_links = $("#main-nav-wrap li a");	
+// -------------------------------------------------------------
+// MagnificPopup
+// -------------------------------------------------------------
 
-	sections.waypoint( {
+(function () {
+    $('.portfolio-info a').magnificPopup({
+      type: 'image',
+      gallery:{
+        enabled:true
+      }
+    });
+}());
 
-       handler: function(direction) {
+// -------------------------------------------------------------
+// Navigation Scroll
+// -------------------------------------------------------------
 
-		   var active_section;
+$(window).scroll(function(event) {
+    Scroll();
+}); 
 
-			active_section = $('section#' + this.element.id);
+$('.navbar-nav li a').click(function() {  
+    $('html, body').animate({scrollTop: $(this.hash).offset().top -1}, 1000);
+    return false;
+});
 
-			if (direction === "up") active_section = active_section.prev();
+// User define function
+function Scroll() {
+    var contentTop      =   [];
+    var contentBottom   =   [];
+    var winTop      =   $(window).scrollTop();
+    var rangeTop    =   200;
+    var rangeBottom =   500;
+    $('.navbar-nav').find('.scroll a').each(function(){
+        contentTop.push( $( $(this).attr('href') ).offset().top);
+        contentBottom.push( $( $(this).attr('href') ).offset().top + $( $(this).attr('href') ).height() );
+    })
+    $.each( contentTop, function(i){
+        if ( winTop > contentTop[i] - rangeTop ){
+            $('.navbar-nav li.scroll')
+            .removeClass('current')
+            .eq(i).addClass('current');          
+        }
+    })
 
-			var active_link = $('#main-nav-wrap a[href="#' + active_section.attr("id") + '"]');			
+};
+    
+// -------------------------------------------------------------
+//  Sticky Nav
+// -------------------------------------------------------------
+(function () {  
+    function menuToggle(){
+        var windowWidth = $(window).width();
+        if(windowWidth > 991 ){
+            $(window).on('scroll', function(){
+                if( $(window).scrollTop()>735 ){
+                    $('.home-two .navbar').addClass('fixed-top animated fadeInDown');
+                } else {
+                    $('.home-two .navbar').removeClass('fixed-top animated fadeInDown');
+                };
+            });
+        }else{
+            
+            $('.home-two .navbar').addClass('fixed-top');
+                
+        };  
+    }
 
-         navigation_links.parent().removeClass("current");
-			active_link.parent().addClass("current");
-
-		}, 
-
-		offset: '25%'
-	});
-
-
-	/*---------------------------------------------------- */
-  	/* Smooth Scrolling
-  	------------------------------------------------------ */
-  	$('.smoothscroll').on('click', function (e) {
-	 	
-	 	e.preventDefault();
-
-   	var target = this.hash,
-    	$target = $(target);
-
-    	$('html, body').stop().animate({
-       	'scrollTop': $target.offset().top
-      }, 800, 'swing', function () {
-      	window.location.hash = target;
-      });
-
-  	});  
-  
-
-   /*---------------------------------------------------- */
-	/*  Placeholder Plugin Settings
-	------------------------------------------------------ */ 
-	$('input, textarea, select').placeholder()  
+    menuToggle();
+}()); 
 
 
- 	/*----------------------------------------------------- */
-  	/* Back to top
-   ------------------------------------------------------- */ 
-	var pxShow = 300; // height on which the button will show
-	var fadeInTime = 400; // how slow/fast you want the button to show
-	var fadeOutTime = 400; // how slow/fast you want the button to hide
-	var scrollSpeed = 300; // how slow/fast you want the button to scroll to top. can be a value, 'slow', 'normal' or 'fast'
 
-   // Show or hide the sticky footer button
-	jQuery(window).scroll(function() {
-
-		if (!( $("#header-search").hasClass('is-visible'))) {
-
-			if (jQuery(window).scrollTop() >= pxShow) {
-				jQuery("#go-top").fadeIn(fadeInTime);
-			} else {
-				jQuery("#go-top").fadeOut(fadeOutTime);
-			}
-
-		}		
-
-	});		
-
-})(jQuery);
