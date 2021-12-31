@@ -44,7 +44,7 @@ Apple Rainbow Logo Colors
 
 html,
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-weight:normal;
     overflow-x:hidden;
     -webkit-font-smoothing: antialiased;
@@ -52,7 +52,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-weight: 700;
     color: #2d3038;
     margin-top: 10px;
